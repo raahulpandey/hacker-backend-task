@@ -1,0 +1,27 @@
+{
+  "name": "hacker-backend-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start" : "app.js",
+    "dev" : "app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raahulpandey/hacker-backend-task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raahulpandey/hacker-backend-task/issues"
+  },
+  "homepage": "https://github.com/raahulpandey/hacker-backend-task#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
