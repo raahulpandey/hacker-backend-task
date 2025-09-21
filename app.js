@@ -1,30 +1,20 @@
 const express = require('express')
 const app = express()
+const PORT = process.env.PORT || 5000
 
+const logger = require('./middleware/logger');
+const echoroute = require('./routes/echoroutes')
+const randomroute = require('./routes/randomroutes')
 
-app.use((req,res,next) => {
-    const now = new Date().toISOString();
-    console.log(`[${now} ${req.method} ${req.url}]`)
-    next();
-})
+app.use(logger)
 
-app.get('/ping',(req,res) => {
-    res.status(200).json({message :'pong'})
-})
-
-app.get('/time',(req,res) => {
-    res.status(200).json({time :new Date().toISOString()})
-})
-
-app.get('/random',(req,res) => {
-    const val = Math.floor(Math.random*100) + 1
-    res.status(200).json({random : val})
-})
+app.use('/echo',echoroute);
+app.use('/random',randomroute)
 
 app.use((req,res) => {
     res.status(404).json({error :'value not found'})
 })
 
-app.listen(5000,() => {
+app.listen(PORT,() => {
     console.log('server is running on port 5000')
 })
