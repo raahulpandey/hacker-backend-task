@@ -1,13 +1,8 @@
 # Hacker Backend Task (Levels 1-4)
 
 ## Overview
-This project is a Node.js + Express backend built to practice modular backend development.  
-It demonstrates step-by-step learning from Level 1 to Level 4.
-
-- **Level-1:** Basic routes like `/ping`, `/time`, `/random` without modular structure  
-- **Level-2:** Added POST /echo route with input validation  
-- **Level-3:** Introduced query parameters and random number validation  
-- **Level-4:** Modular controllers, routers, logger middleware, 404 handler  
+This is a **Node.js + Express** backend project built for step-by-step practice of backend development.  
+It demonstrates learning from **Level 1 → Level 4**, including modular structure and file-based CRUD operations.
 
 ---
 
@@ -16,16 +11,17 @@ It demonstrates step-by-step learning from Level 1 to Level 4.
 hacker-backend-task/
 ├─ controllers/
 │ ├─ echoController.js
-│ └─ randomController.js
+│ └─ userController.js
 ├─ routes/
 │ ├─ echoRoutes.js
-│ └─ randomRoutes.js
+│ └─ userRoutes.js
 ├─ middleware/
 │ └─ logger.js
 ├─ levels/
 │ ├─ level-1.js
 │ ├─ level-2.js
 │ └─ level-3.js
+├─ userdata.json
 ├─ app.js
 ├─ package.json
 ├─ package-lock.json
@@ -51,7 +47,39 @@ npm install
 # Run the server
 npm start
 Routes
+Level 1 & 2
+GET /ping
+
+json
+Copy code
+Response:
+{
+  "success": true,
+  "message": "pong"
+}
+GET /time
+
+json
+Copy code
+Response:
+{
+  "success": true,
+  "time": "2025-09-23T06:00:00.000Z"
+}
+GET /random
+
+Query Parameters (optional): /random?min=10&max=50
+
+json
+Copy code
+Response:
+{
+  "random": 37,
+  "min": 10,
+  "max": 50
+}
 POST /echo
+
 Body Parameters:
 
 json
@@ -60,10 +88,9 @@ Copy code
   "name": "Rahul",
   "age": 21
 }
-Response:
-
 json
 Copy code
+Response:
 {
   "success": true,
   "you_sent": {
@@ -71,44 +98,36 @@ Copy code
     "age": 21
   }
 }
-GET /random
-Query Parameters (optional):
+Level 3 – File-based CRUD for Users
+GET /users → Get all users
+GET /users/:id → Get single user
+POST /users → Add user
+PUT /users/:id → Update user
+DELETE /users/:id → Delete user
 
-arduino
-Copy code
-/random?min=10&max=50
-Response:
+All endpoints include input validation and error handling.
 
-json
-Copy code
-{
-  "random": 37,
-  "min": 10,
-  "max": 50
-}
+Level 4 – Modular Structure
+Controllers: userController.js, echoController.js
+
+Routes: userRoutes.js, echoRoutes.js
+
+Middleware: logger.js for request logging
+
+App Setup: app.js
+
+This structure prepares the project for future Level-5 with database integration and advanced features.
+
 Features
-Stepwise learning with Level-1 → Level-4 files
+Stepwise learning from basic routes → CRUD → Modular design
 
-Controllers handle business logic
+File-based user management (userdata.json)
 
-Modular routers for clean code
+Input validation for all endpoints
 
 Logger middleware for request logging
 
-Input validation for /echo and /random
-
 404 catch-all route
-
-Fully structured for future Level-5 CRUD & persistence
 
 Author
 Rahul Pandey
-
-pgsql
-Copy code
-
----
-
-If you want, I can **also prepare the full working `level-1.js`, `level-2.js`, `level-3.js` code** so that you can **commit everything at once** with this README.  
-
-Do you want me to do that next?
