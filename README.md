@@ -1,133 +1,110 @@
-# Hacker Backend Task (Levels 1-4)
-
-## Overview
-This is a **Node.js + Express** backend project built for step-by-step practice of backend development.  
-It demonstrates learning from **Level 1 → Level 4**, including modular structure and file-based CRUD operations.
-
----
-
-## Project Structure
-
-hacker-backend-task/
-├─ controllers/
-│ ├─ echoController.js
-│ └─ userController.js
-├─ routes/
-│ ├─ echoRoutes.js
-│ └─ userRoutes.js
-├─ middleware/
-│ └─ logger.js
-├─ levels/
-│ ├─ level-1.js
-│ ├─ level-2.js
-│ └─ level-3.js
-├─ userdata.json
-├─ app.js
-├─ package.json
-├─ package-lock.json
-└─ node_modules/
-
-yaml
-Copy code
-
----
-
-## Installation
-
-```bash
-# Clone repo
+Installation
+# Clone the repository
 git clone https://github.com/raahulpandey/hacker-backend-task.git
 
-# Navigate into folder
+# Navigate into project folder
 cd hacker-backend-task
 
 # Install dependencies
 npm install
 
-# Run the server
+# Start the server
 npm start
-Routes
-Level 1 & 2
-GET /ping
 
-json
-Copy code
-Response:
-{
-  "success": true,
-  "message": "pong"
-}
-GET /time
 
-json
-Copy code
-Response:
-{
-  "success": true,
-  "time": "2025-09-23T06:00:00.000Z"
-}
-GET /random
+The server runs on PORT 5000 by default.
 
-Query Parameters (optional): /random?min=10&max=50
+Routes & Usage
+Level 1 & 2 – Basic Routes
 
-json
-Copy code
-Response:
-{
-  "random": 37,
-  "min": 10,
-  "max": 50
-}
-POST /echo
+GET /ping, GET /time, GET /random, POST /echo
+(Refer to previous README for sample request/response)
 
-Body Parameters:
-
-json
-Copy code
-{
-  "name": "Rahul",
-  "age": 21
-}
-json
-Copy code
-Response:
-{
-  "success": true,
-  "you_sent": {
-    "name": "Rahul",
-    "age": 21
-  }
-}
 Level 3 – File-based CRUD for Users
-GET /users → Get all users
-GET /users/:id → Get single user
-POST /users → Add user
-PUT /users/:id → Update user
-DELETE /users/:id → Delete user
 
-All endpoints include input validation and error handling.
+GET /users, GET /users/:id, POST /users, PUT /users/:id, DELETE /users/:id
+File-based storage in users.json with validation.
 
 Level 4 – Modular Structure
-Controllers: userController.js, echoController.js
 
-Routes: userRoutes.js, echoRoutes.js
+Controllers handle logic
 
-Middleware: logger.js for request logging
+Routes handle endpoints
 
-App Setup: app.js
+Middleware handles logging
 
-This structure prepares the project for future Level-5 with database integration and advanced features.
+App.js is the entry point
+
+Level 5 – Authentication & Protected Routes
+
+POST /auth/register → Register new user with hashed password
+
+POST /auth/login → Login user and get JWT token
+
+GET /auth/profile → Protected route, accessible only with valid JWT token
+
+Example: Register User
+POST /auth/register
+{
+  "username": "rahul",
+  "password": "123456"
+}
+
+Response:
+{
+  "message": "user registered",
+  "user": 1,
+  "username": "rahul"
+}
+
+Example: Login User
+POST /auth/login
+{
+  "username": "rahul",
+  "password": "123456"
+}
+
+Response:
+{
+  "message": "login successfully",
+  "token": "eyJhbGciOiJIUzI1NiIsInR..."
+}
+
+Example: Access Protected Profile
+GET /auth/profile
+Headers:
+Authorization: Bearer <JWT_TOKEN>
+
+Response:
+{
+  "message": "profile accessed",
+  "user": {
+    "id": 1,
+    "username": "rahul"
+  }
+}
+
+
+JWT token is used for authentication
+
+authMiddleware.js verifies token and protects routes
+
+Passwords are hashed using bcryptjs
 
 Features
-Stepwise learning from basic routes → CRUD → Modular design
 
-File-based user management (userdata.json)
+Stepwise learning from basic routes → CRUD → Modular design → JWT Authentication
 
-Input validation for all endpoints
+File-based user management (users.json)
+
+Input validation and error handling
 
 Logger middleware for request logging
 
-404 catch-all route
+JWT-based authentication with protected routes
+
+Catch-all 404 route
 
 Author
+
 Rahul Pandey
