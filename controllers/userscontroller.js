@@ -32,7 +32,8 @@ const findByid = (id) => {
 const createuser = (userdata) => {
     const users = readusers()
     let id = users.length +1;
-    let user = {id,...userdata}
+    const defaultrole = users.length === 0 ? 'admin' : 'user';
+    let user = {id,role:userdata.role || defaultrole,...userdata}
     users.push(user)
     writeusers(users)
     return user;
