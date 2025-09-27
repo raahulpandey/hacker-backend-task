@@ -1,7 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 dotenv.config();
-console.log("Mongo URL:", process.env.MONGO_URL); 
+
 const connectDB = require('./dataBase/data')
 const app = express()
 

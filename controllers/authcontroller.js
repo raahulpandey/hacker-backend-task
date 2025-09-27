@@ -12,13 +12,18 @@ const register = async (req, res) => {
         
         const eistinguser = await User.findOne({username});
         if(eistinguser) return res.status(400).json({message:'user already exist'});
+
         
         const hashpassword = await bcrypt.hash(password,10)
+
+        const countuser = await User.countDocuments();
+
+        const roleuser = countuser=== 0 ? 'admin' : 'user';
 
         const newuser = new User({
             username,
             password:hashpassword,
-            role:role || 'user'
+            role:roleuser
         });
         await newuser.save();
         res.status(201).json({message : `user registered sucessfully`,user:{username:newuser.username,role:newuser.role}})

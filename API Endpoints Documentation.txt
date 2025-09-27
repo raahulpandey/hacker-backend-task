@@ -1,0 +1,86 @@
+Hacker Backend Task – API Endpoints Documentation
+=================================================
+
+For checking all the rote of api you have the download the postman or any other api testing app
+
+Base URL:
+https://hacker-backend-task-2.onrender.com
+
+1️⃣ Authentication Routes
+-----------------------
+
+POST /auth/register
+- Description: Register a new user. The first user becomes admin, rest are regular users.
+- Body (JSON):
+{
+    "username": "exampleUser",
+    "password": "yourPassword"
+}
+- Response: User object with role and username
+
+POST /auth/login
+- Description: Login an existing user
+- Body (JSON):
+{
+    "username": "exampleUser",
+    "password": "yourPassword"
+}
+- Response: JWT token and success message
+
+GET /auth/profile
+- Description: Access profile information of logged-in user
+- Headers: Authorization: Bearer <JWT_TOKEN>
+- Response: User info
+
+GET /auth/admin
+- Description: Admin-only access
+- Headers: Authorization: Bearer <JWT_TOKEN>
+- Response: Welcome message if role is admin
+
+GET /auth/dashboard
+- Description: Access dashboard for admin or user
+- Headers: Authorization: Bearer <JWT_TOKEN>
+- Response: Welcome message with user info
+
+2️⃣ User Routes
+----------------
+GET /user/
+- Description: Get all users
+- Response: List of users
+
+GET /user/:id
+- Description: Get a single user by ID
+- Response: User object
+
+POST /user/
+- Description: Create a user (file-based storage)
+- Body (JSON):
+{
+    "name": "John Doe",
+    "age": 25
+}
+
+PUT /user/:id
+- Description: Update user by ID
+- Body (JSON): Optional fields `name` and `age`
+
+DELETE /user/:id
+- Description: Delete user by ID
+
+3️⃣ Echo Route
+-------------
+POST /echo/
+- Description: Echo back data with validation
+- Body (JSON):
+{
+    "name": "John",
+    "age": 25
+}
+- Response: Sent data
+
+4️⃣ Random Route
+---------------
+GET /random?min=1&max=100
+- Description: Get a random number between min and max
+- Response: JSON { random: number, min: number, max: number }
+
