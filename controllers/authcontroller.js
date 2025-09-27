@@ -1,33 +1,54 @@
+const User = require('../dataBase/user')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const usercontroller = require('../controllers/userscontroller')
+//const usercontroller = require('../controllers/userscontroller')
 
 const env = "supersecret"
 
-const register = (req, res) => {
-    const {username,password} = req.body
-    if(!username || ! password) return res.status(400).json({message:'username or password required'})
-    const existing = usercontroller.findbyuser(username)
-    if(existing) return res.status(400).json('user alredy exist')
+const register = async (req, res) => {
+    try {
+        const {username,password,role}=req.body;
+
+        
+        const eistinguser = await User.findOne({username});
+        if(eistinguser) return res.status(400).json({message:'user already exist'});
+        
+        const hashpassword = await bcrypt.hash(password,10)
+
+        const newuser = new User({
+            username,
+            password:hashpassword,
+            role:role || 'user'
+        });
+        await newuser.save();
+        res.status(201).json({message : `user registered sucessfully`,user:{username:newuser.username,role:newuser.role}})
+    }catch (error) {
+        res.status(500).json({message:error.message})
+
+    }
     
-    const hashed = bcrypt.hashSync(password,8)
-    const user = usercontroller.createuser({username,password:hashed })
-    res.status(200).json({message:`user registered`,user:user.id,username:user.username})
+
 }
+   
+const login = async (req,res) => {
+    try {
+        const {username,password} = req.body;
+        const user =  await User.findOne({username})
+        if(!user) return res.status(400).json({message:'Invalid username or password'});
 
-const login = (req,res) => {
-    const {username,password} = req.body
+        const isMatch = await bcrypt.compare(password,user.password)
+        if(!isMatch) return res.status(400).json({message:'Invalid username or password'});
 
-    const user = usercontroller.findbyuser(username)
-    if(!user) return res.status(400).json({message:'user not exist'})
-    
-    const valid = bcrypt.compareSync(password,user.password)
+        const token = jwt.sign(
+            {id:user._id,username:user.username,role:user.role},
+            process.env.JWT_SECRET,
+            {expiresIn:process.env.JWT_EXPIRES_IN}
+        )
+        res.json({message:'login sucessfully',token})
+    }catch(error) {
+        res.status(500).json({message:error.message})
+    }
 
-    if(!valid) return res.status(400).json({message:'Invalid password'})
-
-    const token= jwt.sign({id:user.id,username:user.username, role:user.role},env,{expiresIn:'1h'})
-
-    res.status(200).json({message:`login sucessfully`,token})
 }
-
+   
 module.exports={login,register}

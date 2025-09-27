@@ -1,6 +1,14 @@
 const express = require('express')
+const dotenv = require('dotenv')
+dotenv.config();
+console.log("Mongo URL:", process.env.MONGO_URL); 
+const connectDB = require('./dataBase/data')
 const app = express()
+
+
 const PORT = process.env.PORT || 5000
+
+connectDB();
 
 const authroute = require('./routes/authroutes')
 
@@ -16,3 +24,4 @@ app.listen(PORT,() => {
     console.log('server is running on port 5000')
 
 })
+
