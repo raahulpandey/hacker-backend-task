@@ -15,7 +15,7 @@ const authroute = require('./routes/authroutes')
 
 app.use(express.json())
 
-app.use('/auth',authroute)
+app.use('/auth',authroute)  
 
 app.use((req,res) => {
     res.status(404).json({message:'rouet not found'})

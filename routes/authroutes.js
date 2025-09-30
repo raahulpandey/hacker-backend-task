@@ -7,6 +7,9 @@ const { route } = require('./userroutes');
 
 router.post('/register',authcontroller.register);
 router.post('/login',authcontroller.login);
+router.post('/refresh-token',authcontroller.refreshToken)
+router.post('/forgot-password', authcontroller.forgotPassword);
+router.post('/reset-password/:token', authcontroller.resetPassword);
 
 router.get('/profile',authMiddleware,(req,res) => {
     res.json({message:'profile accessed' , user:req.user})
