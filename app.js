@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 dotenv.config();
 
 const connectDB = require('./dataBase/data')
+const errorHandller = require('./middleware/errorHandller');
 const app = express()
 
 
@@ -19,6 +20,8 @@ app.use('/auth',authroute)
 app.use((req,res) => {
     res.status(404).json({message:'rouet not found'})
 })
+
+app.use(errorHandller);
 
 app.listen(PORT,() => {
     console.log('server is running on port 5000')
