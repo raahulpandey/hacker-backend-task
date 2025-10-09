@@ -105,4 +105,4 @@ Response:
 | Deployment platforms                        | Render, Heroku, Railway, Vercel                                                                    |
 | Deployment steps                           | Connect GitHub repo → Configure build/start commands → Deploy → Test API on live URL               |
 
-| AUTHOR                                     | Rahul Kumar Pandey                                                                                       |
+| AUTHOR                                     | Rahul Kumar Pandey    .                                                                                   |
