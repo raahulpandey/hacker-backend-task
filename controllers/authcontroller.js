@@ -21,7 +21,7 @@ const register = async (req, res) => {
         const newUser = new User({
             username,
             email,
-            password: hashPassword,
+            password,  //: hashPassword
             role: roleUser
         });
 

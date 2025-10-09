@@ -4,6 +4,7 @@ dotenv.config();
 
 const connectDB = require('./dataBase/data')
 const errorHandller = require('./middleware/errorHandller');
+const errorHandler = require('./middleware/errorHandler');
 const app = express()
 
 
@@ -22,6 +23,7 @@ app.use((req,res) => {
 })
 
 app.use(errorHandller);
+app.use(errorHandler);
 
 app.listen(PORT,() => {
     console.log('server is running on port 5000')
